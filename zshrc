@@ -97,7 +97,7 @@ function scmbranch {
 				else
 					GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{cyan}%}${GITBRANCH}${GITDIRTY}${PSCOL})"
 				fi
-				echo ${GITBRANCH}
+				echo -ne ${GITBRANCH}
 			fi
 		fi
 		if which hg > /dev/null 2>&1; then
