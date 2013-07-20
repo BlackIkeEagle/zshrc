@@ -48,6 +48,8 @@ zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
 	${=${${${${(@M)${(f)"$(<~/.ssh/config)"}:#Host *}#Host }:#*\**}:#*\?*}}
 	)'
 
+zstyle ':completion:*' menu select
+
 #=====================================#
 # Load config                         #
 #=====================================#
