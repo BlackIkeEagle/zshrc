@@ -54,6 +54,11 @@ zstyle ':completion:*' menu select
 # Load config                         #
 #=====================================#
 
+if [ -e $HOME/.zshrc.config ]; then
+    source $HOME/.zshrc.config
+elif [ -e /etc/zsh/zshrc.config ]; then
+    source /etc/zsh/zshrc.config
+fi
 # defaults
 [ -z $PSCOL ] && PSCOL='%{%F{yellow}%}'
 [ -z $USRCOL ] && USRCOL='%{%F{yellow}%}'
