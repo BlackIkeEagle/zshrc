@@ -32,6 +32,7 @@ setopt nobeep
 setopt autocd
 # zsh vi mode
 bindkey -v
+bindkey '^R' history-incremental-search-backward
 
 #=====================================#
 # Load zsh modules                    #
