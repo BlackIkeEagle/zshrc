@@ -60,6 +60,10 @@ if [ -e $HOME/.zshrc.config ]; then
 elif [ -e /etc/zsh/zshrc.config ]; then
     source /etc/zsh/zshrc.config
 fi
+
+#=====================================#
+# Default promt colors                #
+#=====================================#
 # defaults
 [ -z $PSCOL ] && PSCOL='%{%F{yellow}%}'
 [ -z $USRCOL ] && USRCOL='%{%F{yellow}%}'
@@ -67,6 +71,11 @@ fi
 # default flags
 [ -z $SCMENABLED ] && SCMENABLED=1
 [ -z $SCMDIRTY ] && SCMDIRTY=1
+
+if [ "$(id -u)" = "0" ]; then
+	PSCOL='%{%F{red}%}';
+	USRCOL='%{%F{red}%}';
+fi
 
 #=====================================#
 # LS colors                           #
@@ -97,7 +106,7 @@ alias cd..='cd ..';
 #=====================================#
 
 function scmbranch {
-	if [ `id -u` != "0" ] && [ $SCMENABLED -eq 1 ]; then
+	if [ "$(id -u)" != "0" ] && [ $SCMENABLED -eq 1 ]; then
 		if which git > /dev/null 2>&1; then
 			if git rev-parse > /dev/null 2>&1; then
 				GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
@@ -145,7 +154,7 @@ function scmbranch {
 }
 
 function fldcol {
-	if [ `id -u` != "0" ]; then
+	if [ "$(id -u)" != "0" ]; then
 		if [[ $PWD =~ \/herecura ]]; then
 			FLDCOL='%{%F{yellow}%}%B%U%~%u%b'
 		elif [[ $PWD =~ \/scripts ]]; then
