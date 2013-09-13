@@ -18,7 +18,7 @@ export SAVEHIST=8192
 # make sure we append history to the history file
 setopt appendhistory
 # share history among different running shells
-setopt share_history
+#setopt share_history
 # don't remember duplicates
 setopt histignorealldups
 
