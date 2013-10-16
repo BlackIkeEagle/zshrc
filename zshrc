@@ -31,8 +31,8 @@ setopt nobeep
 # cd when only a path is given
 setopt autocd
 # zsh vi mode
-bindkey -v
-bindkey '^R' history-incremental-search-backward
+#bindkey -v
+#bindkey '^R' history-incremental-search-backward
 
 #=====================================#
 # Load zsh modules                    #
