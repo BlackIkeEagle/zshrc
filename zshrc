@@ -11,8 +11,13 @@
 #=====================================#
 # Keybindings                         #
 #=====================================#
-bindkey "\e[1~" beginning-of-line
-bindkey "\e[4~" end-of-line
+# commonly found home and end key escape sequences
+bindkey "^[[H" beginning-of-line
+bindkey "^[[1~" beginning-of-line
+bindkey "^[OH" beginning-of-line
+bindkey "^[[F"  end-of-line
+bindkey "^[[4~" end-of-line
+bindkey "^[OF" end-of-line
 
 #=====================================#
 # History settings                    #
