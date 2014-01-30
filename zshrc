@@ -52,6 +52,10 @@ setopt autocd
 autoload -Uz compinit
 compinit
 
+# when new binaries are added by default they are not
+# completed, when we dont trust the hash they are
+zstyle ":completion:*:commands" rehash 1
+
 # completion options
 zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
 	${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) \
