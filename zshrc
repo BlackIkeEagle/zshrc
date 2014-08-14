@@ -18,6 +18,8 @@ bindkey "^[OH" beginning-of-line
 bindkey "^[[F"  end-of-line
 bindkey "^[[4~" end-of-line
 bindkey "^[OF" end-of-line
+# ctrl+r backward search history
+bindkey '^R' history-incremental-search-backward
 
 #=====================================#
 # History settings                    #
