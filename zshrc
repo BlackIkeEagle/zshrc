@@ -130,7 +130,12 @@ function scmbranch {
 				GITBRANCH=${GITBRANCH/refs\/heads\//}
 				GITDIRTY=''
 				if [ $SCMDIRTY -eq 1 ]; then
+					# if has unstaged changes
 					git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
+					# if only has staged changes
+					if [ "$GITDIRTY" = "" ]; then
+						git diff --staged --no-ext-diff --quiet --exit-code || GITDIRTY=" +"
+					fi
 				fi
 				if [ "${GITBRANCH}" = "master" ]; then
 					GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{green}%}${GITBRANCH}${GITDIRTY}${PSCOL})"
