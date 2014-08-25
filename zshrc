@@ -72,9 +72,9 @@ zstyle ':completion:*' menu select
 # Load config                         #
 #=====================================#
 
-if [ -e $HOME/.zshrc.config ]; then
+if [[ -e $HOME/.zshrc.config ]]; then
     source $HOME/.zshrc.config
-elif [ -e /etc/zsh/zshrc.config ]; then
+elif [[ -e /etc/zsh/zshrc.config ]]; then
     source /etc/zsh/zshrc.config
 fi
 
@@ -82,14 +82,14 @@ fi
 # Default promt colors                #
 #=====================================#
 # defaults
-[ -z $PSCOL ] && PSCOL='%{%F{yellow}%}'
-[ -z $USRCOL ] && USRCOL='%{%F{yellow}%}'
-[ -z $HSTCOL ] && HSTCOL='%{%F{white}%}'
+[[ -z $PSCOL ]] && PSCOL='%{%F{yellow}%}'
+[[ -z $USRCOL ]] && USRCOL='%{%F{yellow}%}'
+[[ -z $HSTCOL ]] && HSTCOL='%{%F{white}%}'
 # default flags
-[ -z $SCMENABLED ] && SCMENABLED=1
-[ -z $SCMDIRTY ] && SCMDIRTY=1
+[[ -z $SCMENABLED ]] && SCMENABLED=1
+[[ -z $SCMDIRTY ]] && SCMDIRTY=1
 
-if [ "$(id -u)" = "0" ]; then
+if [[ "$(id -u)" = "0" ]]; then
 	PSCOL='%{%F{red}%}';
 	USRCOL='%{%F{red}%}';
 fi
@@ -123,23 +123,23 @@ alias cd..='cd ..';
 #=====================================#
 
 function scmbranch {
-	if [ "$(id -u)" != "0" ] && [ $SCMENABLED -eq 1 ]; then
+	if [[ "$(id -u)" != "0" ]] && [[ $SCMENABLED -eq 1 ]]; then
 		if which git > /dev/null 2>&1; then
 			if git rev-parse > /dev/null 2>&1; then
 				GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
 				GITBRANCH=${GITBRANCH/refs\/heads\//}
 				GITDIRTY=''
-				if [ $SCMDIRTY -eq 1 ]; then
+				if [[ $SCMDIRTY -eq 1 ]]; then
 					# if has unstaged changes
 					git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
 					# if only has staged changes
-					if [ "$GITDIRTY" = "" ]; then
+					if [[ "$GITDIRTY" = "" ]]; then
 						git diff --staged --no-ext-diff --quiet --exit-code || GITDIRTY=" +"
 					fi
 				fi
-				if [ "${GITBRANCH}" = "master" ]; then
+				if [[ "${GITBRANCH}" = "master" ]]; then
 					GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{green}%}${GITBRANCH}${GITDIRTY}${PSCOL})"
-				elif [ "${GITBRANCH}" = "" ]; then
+				elif [[ "${GITBRANCH}" = "" ]]; then
 					GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{red}%}$(git rev-parse --short HEAD)...${GITDIRTY}${PSCOL})"
 				else
 					GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{cyan}%}${GITBRANCH}${GITDIRTY}${PSCOL})"
@@ -151,10 +151,10 @@ function scmbranch {
 			if hg branch > /dev/null 2>&1; then
 				HGBRANCH=$(hg branch 2>/dev/null)
 				HGDIRTY=
-				if [ $SCMDIRTY -eq 1 ]; then
+				if [[ $SCMDIRTY -eq 1 ]]; then
 					[[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
 				fi
-				if [ "${HGBRANCH}" = "default" ]; then
+				if [[ "${HGBRANCH}" = "default" ]]; then
 					HGBRANCH="${PSCOL}─(%{%F{yellow}%}%Bhg%b${PSCOL})─(%{%F{green}%}${HGBRANCH}${HGDIRTY}${PSCOL})"
 				else
 					HGBRANCH="${PSCOL}─(%{%F{yellow}%}%Bhg%b${PSCOL})─(%{%F{cyan}%}${HGBRANCH}${HGDIRTY}${PSCOL})"
@@ -165,7 +165,7 @@ function scmbranch {
 		if which svn > /dev/null 2>&1; then
 			if svn info > /dev/null 2>&1; then
 				SVNREVISION=$(svn info | sed -ne 's/^Revision: //p')
-				if [ $SCMDIRTY -eq 1 ]; then
+				if [[ $SCMDIRTY -eq 1 ]]; then
 					[[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
 				fi
 				SVNBRANCH="${PSCOL}─(%{%F{yellow}%}%Bsvn%b${PSCOL})─(%{%F{green}%}${SVNREVISION}${SVNDIRTY}${PSCOL})"
@@ -176,7 +176,7 @@ function scmbranch {
 }
 
 function fldcol {
-	if [ "$(id -u)" != "0" ]; then
+	if [[ "$(id -u)" != "0" ]]; then
 		if [[ $PWD =~ \/herecura ]]; then
 			FLDCOL='%{%F{yellow}%}%B%U%~%u%b'
 		elif [[ $PWD =~ \/scripts ]]; then
@@ -188,7 +188,7 @@ function fldcol {
 		fi
 	fi
 
-	if [ "${FLDCOL}" = "" ]; then
+	if [[ "${FLDCOL}" = "" ]]; then
 		if [[ $PWD =~ ^\/etc ]]; then
 			FLDCOL='%{%F{red}%}%B%U%~%u%b'
 		elif [[ $PWD =~ ^\/var/log ]]; then
@@ -204,10 +204,10 @@ function fldcol {
 # Session colors tty/ssh/screen       #
 #=====================================#
 
-if [ "$STY" != "" ]; then
+if [[ "$STY" != "" ]]; then
 	# screen
 	SESSCOL='%{%F{cyan}%}%B%*%b'
-elif [ "$SSH_CLIENT" != "" ]; then
+elif [[ "$SSH_CLIENT" != "" ]]; then
 	# SSH
 	SESSCOL='%{%F{red}%}%B%*%b'
 else
