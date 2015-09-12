@@ -66,6 +66,9 @@ zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
 	${=${${${${(@M)${(f)"$(<~/.ssh/config)"}:#Host *}#Host }:#*\**}:#*\?*}}
 	)'
 
+# case-sensitive (all),partial-word and then substring completion
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
 zstyle ':completion:*' menu select
 
 #=====================================#
