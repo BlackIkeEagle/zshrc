@@ -197,25 +197,26 @@ function scmbranch {
 }
 
 function fldcol {
+	folder=$(echo "${PWD/#$HOME/~}")
 	if [[ "$(id -u)" != "0" ]]; then
 		if [[ $PWD =~ \/herecura ]]; then
-			FLDCOL='%{%F{yellow}%}%B%U%~%u%b'
+			FLDCOL="%{%F{yellow}%}%B%U${folder}%u%b"
 		elif [[ $PWD =~ \/scripts ]]; then
-			FLDCOL='%{%F{blue}%}%B%U%~%u%b'
+			FLDCOL="%{%F{blue}%}%B%U${folder}%u%b"
 		elif [[ $PWD =~ \/vimfiles ]]; then
-			FLDCOL='%{%F{purple}%}%B%U%~%u%b'
+			FLDCOL="%{%F{purple}%}%B%U${folder}%u%b"
 		elif [[ $PWD =~ \/devel ]]; then
-			FLDCOL='%{%F{white}%}%B%U%~%u%b'
+			FLDCOL="%{%F{white}%}%B%U${folder}%u%b"
 		fi
 	fi
 
 	if [[ "${FLDCOL}" = "" ]]; then
 		if [[ $PWD =~ ^\/etc ]]; then
-			FLDCOL='%{%F{red}%}%B%U%~%u%b'
+			FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
 		elif [[ $PWD =~ ^\/var/log ]]; then
-			FLDCOL='%{%F{red}%}%B%U%~%u%b'
+			FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
 		else
-			FLDCOL='%{%F{cyan}%}%B%~%b'
+			FLDCOL="%{%F{cyan}%}%B${folder}%b"
 		fi
 	fi
 	echo -ne ${FLDCOL}
