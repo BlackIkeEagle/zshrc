@@ -70,8 +70,13 @@ zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
 # get a complete list of pids for the current user
-zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+if [[ "$(id -u)" != "0" ]]; then
+    zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+else
+    zstyle ':completion:*:*:*:*:processes' command "ps -e -o pid,user,comm -w -w"
+fi
 
+# show menu for completion options
 zstyle ':completion:*' menu select
 
 #=====================================#
