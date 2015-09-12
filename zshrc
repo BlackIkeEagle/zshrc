@@ -69,6 +69,9 @@ zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
 # case-sensitive (all),partial-word and then substring completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
 
+# get a complete list of pids for the current user
+zstyle ':completion:*:*:*:*:processes' command "ps -u $USER -o pid,user,comm -w -w"
+
 zstyle ':completion:*' menu select
 
 #=====================================#
