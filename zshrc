@@ -6,7 +6,9 @@
 # Add .bin if it exists               #
 #=====================================#
 
-[ -d $HOME/.bin ] && PATH=$HOME/.bin:$PATH
+if [[ -d $HOME/.bin && ":$PATH:" != *:"$HOME/.bin":* ]]; then
+    PATH=$HOME/.bin:$PATH
+fi
 
 #=====================================#
 # Keybindings                         #
