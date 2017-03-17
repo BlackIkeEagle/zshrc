@@ -18,6 +18,10 @@ fi
 # emacs mode
 bindkey -e
 
+# context aware history search
+bindkey "^[[5~" history-search-backward
+bindkey "^[[6~" history-search-forward
+
 #=====================================#
 # History settings                    #
 #=====================================#
