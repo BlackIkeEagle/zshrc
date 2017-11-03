@@ -199,7 +199,20 @@ function scmbranch {
 }
 
 function fldcol {
-	folder=$(echo "${PWD/#$HOME/~}")
+    local width=$(ttywidth)
+    local maxfolderlength=$(( width - 70 ))
+    if [[ $width -le 90 ]]; then
+        maxfolderlength=$((width - 35))
+    fi
+    if [[ $maxfolderlength -le 10 ]]; then
+        maxfolderlength=10
+    fi
+    local folder="$(echo "${PWD/#$HOME/~}")"
+    local folderlength=${#folder}
+    if [[ $folderlength -gt $maxfolderlength ]]; then
+        maxfolderlength=$(( maxfolderlength - 3))
+        folder="...$(echo -n "$folder" | tail -c $maxfolderlength)"
+    fi
 	if [[ "$(id -u)" != "0" ]]; then
 		if [[ $PWD =~ \/herecura ]]; then
 			FLDCOL="%{%F{yellow}%}%B%U${folder}%u%b"
