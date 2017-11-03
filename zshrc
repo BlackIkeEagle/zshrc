@@ -224,6 +224,20 @@ function fldcol {
 	echo -ne ${FLDCOL}
 }
 
+function ttywidth {
+    stty size | read rows columns
+    echo -ne $columns
+}
+
+function userinfo {
+    local width=$(ttywidth)
+    local usrinfo=""
+    if [[ $width -gt 90 ]]; then
+        usrinfo+="─┤${SESSCOL}${PSCOL}├─┤${USRCOL}%B%n%b${PSCOL} @ ${HSTCOL}%B%M%b${PSCOL}├"
+    fi
+    echo -ne $usrinfo
+}
+
 #=====================================#
 # Session colors tty/ssh/screen       #
 #=====================================#
@@ -239,5 +253,5 @@ else
 fi
 
 setopt prompt_subst
-PROMPT='${PSCOL}┌─┤%(?,%F{green}%}%B●%b,%F{red}%}%B●%b)${PSCOL}├─┤${SESSCOL}${PSCOL}├─┤${USRCOL}%B%n%b${PSCOL} @ ${HSTCOL}%B%M%b${PSCOL}├─┤$(fldcol)${PSCOL}├$(scmbranch)─╼
+PROMPT='${PSCOL}┌─┤%(?,%F{green}%}%B●%b,%F{red}%}%B●%b)${PSCOL}├$(userinfo)─┤$(fldcol)${PSCOL}├$(scmbranch)─╼
 └╼ %{%F{reset}%}'
