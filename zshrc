@@ -58,11 +58,11 @@ zstyle ":completion:*:commands" rehash 1
 
 # completion options
 zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
-	${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) \
-		/dev/null)"}%%[# ]*}//,/ }
-	${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
-	${=${${${${(@M)${(f)"$(<~/.ssh/config)"}:#Host *}#Host }:#*\**}:#*\?*}}
-	)'
+    ${=${${(f)"$(cat {/etc/ssh_,~/.ssh/known_}hosts(|2)(N) \
+        /dev/null)"}%%[# ]*}//,/ }
+    ${=${(f)"$(cat /etc/hosts(|)(N) <<(ypcat hosts 2>/dev/null))"}%%\#*}
+        ${=${${${${(@M)${(f)"$(<~/.ssh/config)"}:#Host *}#Host }:#*\**}:#*\?*}}
+)'
 
 # case-sensitive (all),partial-word and then substring completion
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
@@ -99,8 +99,8 @@ fi
 [[ -z $SCMDIRTY ]] && SCMDIRTY=1
 
 if [[ "$(id -u)" = "0" ]]; then
-	PSCOL='%{%F{red}%}';
-	USRCOL='%{%F{red}%}';
+    PSCOL='%{%F{red}%}';
+    USRCOL='%{%F{red}%}';
 fi
 
 #=====================================#
@@ -120,9 +120,9 @@ export EDITOR=vim;
 #=====================================#
 
 if ls --version > /dev/null 2>&1; then
-	alias ls='ls --color=auto'; #gnu
+    alias ls='ls --color=auto'; #gnu
 else
-	alias ls='ls -G'; #osx
+    alias ls='ls -G'; #osx
 fi
 alias grep='grep --color';
 alias cd..='cd ..';
@@ -136,66 +136,66 @@ fi
 #=====================================#
 
 function scmbranch {
-	if [[ "$(id -u)" != "0" ]] && [[ $SCMENABLED -eq 1 ]]; then
-		if which git > /dev/null 2>&1; then
-			if git rev-parse > /dev/null 2>&1; then
-				GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
-				GITBRANCH=${GITBRANCH/refs\/heads\//}
-				GITDIRTY=''
-				if [[ $SCMDIRTY -eq 1 ]]; then
-					# if has unstaged changes
-					git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
-					# if only has staged changes
-					if [[ "$GITDIRTY" = "" ]]; then
-						git diff --staged --no-ext-diff --quiet --exit-code || GITDIRTY=" +"
-					fi
-				fi
-				if [[ "${GITBRANCH}" = "master" ]]; then
-					GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{green}%}${GITBRANCH}${GITDIRTY}${PSCOL})"
-				elif [[ "${GITBRANCH}" = "" ]]; then
-					GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{red}%}$(git rev-parse --short HEAD)...${GITDIRTY}${PSCOL})"
-				else
-					GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{cyan}%}${GITBRANCH}${GITDIRTY}${PSCOL})"
-				fi
-				echo -ne ${GITBRANCH}
-			fi
-		fi
-		if which hg > /dev/null 2>&1; then
-			if hg branch > /dev/null 2>&1; then
-				HGBRANCH=$(hg branch 2>/dev/null)
-				HGDIRTY=
-				if [[ $SCMDIRTY -eq 1 ]]; then
-					[[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
-				fi
-				if [[ "${HGBRANCH}" = "default" ]]; then
-					HGBRANCH="${PSCOL}─(%{%F{yellow}%}%Bhg%b${PSCOL})─(%{%F{green}%}${HGBRANCH}${HGDIRTY}${PSCOL})"
-				else
-					HGBRANCH="${PSCOL}─(%{%F{yellow}%}%Bhg%b${PSCOL})─(%{%F{cyan}%}${HGBRANCH}${HGDIRTY}${PSCOL})"
-				fi
-				echo -ne ${HGBRANCH}
-			fi
-		fi
-		if which svn > /dev/null 2>&1; then
-			if svn info > /dev/null 2>&1; then
-				SVNREVISION=$(svn info | sed -ne 's/^Revision: //p')
-				if [[ $SCMDIRTY -eq 1 ]]; then
-					[[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
-				fi
-				SVNBRANCH="${PSCOL}─(%{%F{yellow}%}%Bsvn%b${PSCOL})─(%{%F{green}%}${SVNREVISION}${SVNDIRTY}${PSCOL})"
-				echo -ne ${SVNBRANCH}
-			fi
-		fi
-		if which bzr > /dev/null 2>&1; then
-			if bzr nick > /dev/null 2>&1; then
-				BZRREVISION=$(bzr revno)
-				if [[ $SCMDIRTY -eq 1 ]]; then
-					[[ "$(bzr status | wc -l)" == "0" ]] || BZRDIRTY=" *"
-				fi
-				BZRBRANCH="${PSCOL}─(%{%F{yellow}%}%Bbzr%b${PSCOL})─(%{%F{green}%}${BZRREVISION}${BZRDIRTY}${PSCOL})"
-				echo -ne ${BZRBRANCH}
-			fi
-		fi
-	fi
+    if [[ "$(id -u)" != "0" ]] && [[ $SCMENABLED -eq 1 ]]; then
+        if which git > /dev/null 2>&1; then
+            if git rev-parse > /dev/null 2>&1; then
+                GITBRANCH=$(git symbolic-ref HEAD 2>/dev/null)
+                GITBRANCH=${GITBRANCH/refs\/heads\//}
+                GITDIRTY=''
+                if [[ $SCMDIRTY -eq 1 ]]; then
+                    # if has unstaged changes
+                    git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
+                    # if only has staged changes
+                    if [[ "$GITDIRTY" = "" ]]; then
+                        git diff --staged --no-ext-diff --quiet --exit-code || GITDIRTY=" +"
+                    fi
+                fi
+                if [[ "${GITBRANCH}" = "master" ]]; then
+                    GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{green}%}${GITBRANCH}${GITDIRTY}${PSCOL})"
+                elif [[ "${GITBRANCH}" = "" ]]; then
+                    GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{red}%}$(git rev-parse --short HEAD)...${GITDIRTY}${PSCOL})"
+                else
+                    GITBRANCH="${PSCOL}─(%{%F{yellow}%}%Bgit%b${PSCOL})─(%{%F{cyan}%}${GITBRANCH}${GITDIRTY}${PSCOL})"
+                fi
+                echo -ne ${GITBRANCH}
+            fi
+        fi
+        if which hg > /dev/null 2>&1; then
+            if hg branch > /dev/null 2>&1; then
+                HGBRANCH=$(hg branch 2>/dev/null)
+                HGDIRTY=
+                if [[ $SCMDIRTY -eq 1 ]]; then
+                    [[ "$(hg status -n | wc -l)" == "0" ]] || HGDIRTY=" *"
+                fi
+                if [[ "${HGBRANCH}" = "default" ]]; then
+                    HGBRANCH="${PSCOL}─(%{%F{yellow}%}%Bhg%b${PSCOL})─(%{%F{green}%}${HGBRANCH}${HGDIRTY}${PSCOL})"
+                else
+                    HGBRANCH="${PSCOL}─(%{%F{yellow}%}%Bhg%b${PSCOL})─(%{%F{cyan}%}${HGBRANCH}${HGDIRTY}${PSCOL})"
+                fi
+                echo -ne ${HGBRANCH}
+            fi
+        fi
+        if which svn > /dev/null 2>&1; then
+            if svn info > /dev/null 2>&1; then
+                SVNREVISION=$(svn info | sed -ne 's/^Revision: //p')
+                if [[ $SCMDIRTY -eq 1 ]]; then
+                    [[ "$(svn status | wc -l)" == "0" ]] || SVNDIRTY=" *"
+                fi
+                SVNBRANCH="${PSCOL}─(%{%F{yellow}%}%Bsvn%b${PSCOL})─(%{%F{green}%}${SVNREVISION}${SVNDIRTY}${PSCOL})"
+                echo -ne ${SVNBRANCH}
+            fi
+        fi
+        if which bzr > /dev/null 2>&1; then
+            if bzr nick > /dev/null 2>&1; then
+                BZRREVISION=$(bzr revno)
+                if [[ $SCMDIRTY -eq 1 ]]; then
+                    [[ "$(bzr status | wc -l)" == "0" ]] || BZRDIRTY=" *"
+                fi
+                BZRBRANCH="${PSCOL}─(%{%F{yellow}%}%Bbzr%b${PSCOL})─(%{%F{green}%}${BZRREVISION}${BZRDIRTY}${PSCOL})"
+                echo -ne ${BZRBRANCH}
+            fi
+        fi
+    fi
 }
 
 function fldcol {
@@ -213,28 +213,28 @@ function fldcol {
         maxfolderlength=$(( maxfolderlength - 3))
         folder="...$(echo -n "$folder" | tail -c $maxfolderlength)"
     fi
-	if [[ "$(id -u)" != "0" ]]; then
-		if [[ $PWD =~ \/herecura ]]; then
-			FLDCOL="%{%F{yellow}%}%B%U${folder}%u%b"
-		elif [[ $PWD =~ \/scripts ]]; then
-			FLDCOL="%{%F{blue}%}%B%U${folder}%u%b"
-		elif [[ $PWD =~ \/vimfiles ]]; then
-			FLDCOL="%{%F{purple}%}%B%U${folder}%u%b"
-		elif [[ $PWD =~ \/devel ]]; then
-			FLDCOL="%{%F{white}%}%B%U${folder}%u%b"
-		fi
-	fi
+    if [[ "$(id -u)" != "0" ]]; then
+        if [[ $PWD =~ \/herecura ]]; then
+            FLDCOL="%{%F{yellow}%}%B%U${folder}%u%b"
+        elif [[ $PWD =~ \/scripts ]]; then
+            FLDCOL="%{%F{blue}%}%B%U${folder}%u%b"
+        elif [[ $PWD =~ \/vimfiles ]]; then
+            FLDCOL="%{%F{purple}%}%B%U${folder}%u%b"
+        elif [[ $PWD =~ \/devel ]]; then
+            FLDCOL="%{%F{white}%}%B%U${folder}%u%b"
+        fi
+    fi
 
-	if [[ "${FLDCOL}" = "" ]]; then
-		if [[ $PWD =~ ^\/etc ]]; then
-			FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
-		elif [[ $PWD =~ ^\/var/log ]]; then
-			FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
-		else
-			FLDCOL="%{%F{cyan}%}%B${folder}%b"
-		fi
-	fi
-	echo -ne ${FLDCOL}
+    if [[ "${FLDCOL}" = "" ]]; then
+        if [[ $PWD =~ ^\/etc ]]; then
+            FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
+        elif [[ $PWD =~ ^\/var/log ]]; then
+            FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
+        else
+            FLDCOL="%{%F{cyan}%}%B${folder}%b"
+        fi
+    fi
+    echo -ne ${FLDCOL}
 }
 
 function ttywidth {
@@ -256,13 +256,13 @@ function userinfo {
 #=====================================#
 
 if [[ "$STY" != "" ]]; then
-	# screen
-	SESSCOL='%{%F{cyan}%}%B%*%b'
+    # screen
+    SESSCOL='%{%F{cyan}%}%B%*%b'
 elif [[ "$SSH_CLIENT" != "" ]]; then
-	# SSH
-	SESSCOL='%{%F{red}%}%B%*%b'
+    # SSH
+    SESSCOL='%{%F{red}%}%B%*%b'
 else
-	SESSCOL='%*'
+    SESSCOL='%*'
 fi
 
 setopt prompt_subst
