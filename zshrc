@@ -3,6 +3,26 @@
 #######################################
 
 #=====================================#
+# start tmux session when using ssh   #
+#=====================================#
+
+if which tmux > /dev/null 2>&1 \
+    && [[ "$SSH_CLIENT" != "" ]] \
+    && [[ -z ${TMUX} ]] \
+    && [[ "$(id -u)" != "0" ]]
+then
+    if tmux has-session; then
+        if tmux has-session -t default; then
+            exec tmux a -t default
+        else
+            exec tmux a
+        fi
+    else
+        exec tmux new -s default
+    fi
+fi
+
+#=====================================#
 # Add .bin if it exists               #
 #=====================================#
 
@@ -13,6 +33,7 @@ fi
 #=====================================#
 # Keybindings                         #
 #=====================================#
+
 # vi mode
 #bindkey -v
 # emacs mode
@@ -88,8 +109,9 @@ elif [[ -e /etc/zsh/zshrc.config ]]; then
 fi
 
 #=====================================#
-# Default promt colors                #
+# Default prompt colors               #
 #=====================================#
+
 # defaults
 [[ -z $PSCOL ]] && PSCOL='%{%F{yellow}%}'
 [[ -z $USRCOL ]] && USRCOL='%{%F{yellow}%}'
@@ -264,6 +286,10 @@ elif [[ "$SSH_CLIENT" != "" ]]; then
 else
     SESSCOL='%*'
 fi
+
+#=====================================#
+# Configure prompt                    #
+#=====================================#
 
 setopt prompt_subst
 PROMPT='${PSCOL}┌─┤%(?,%F{green}%}%B●%b,%F{red}%}%B●%b)${PSCOL}├$(userinfo)─┤$(fldcol)${PSCOL}├$(scmbranch)─╼
