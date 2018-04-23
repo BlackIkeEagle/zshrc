@@ -277,12 +277,15 @@ function userinfo {
 # Session colors tty/ssh/screen       #
 #=====================================#
 
-if [[ "$STY" != "" ]]; then
-    # screen
-    SESSCOL='%{%F{cyan}%}%B%*%b'
-elif [[ "$SSH_CLIENT" != "" ]]; then
+if [[ "$SSH_CLIENT" != "" ]]; then
     # SSH
     SESSCOL='%{%F{red}%}%B%*%b'
+elif [[ "$STY" != "" ]]; then
+    # screen
+    SESSCOL='%{%F{cyan}%}%B%*%b'
+elif [[ ! -z $TMUX ]]; then
+    # tmux
+    SESSCOL='%{%F{cyan}%}%B%*%b'
 else
     SESSCOL='%*'
 fi
