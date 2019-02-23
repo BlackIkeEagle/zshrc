@@ -1,0 +1,17 @@
+#!/usr/bin/env zsh
+
+if [[ -e /etc/zsh/zprofile ]]; then
+    sudo vimdiff zprofile /etc/zsh/zprofile
+else
+    sudo cp zprofile /etc/zsh/
+fi
+
+if [[ -e /etc/zsh/zshrc ]]; then
+    sudo vimdiff zshrc /etc/zsh/zshrc
+else
+    sudo cp zshrc /etc/zsh/
+fi
+
+if [[ ! -e "$HOME/.zshrc" ]]; then
+    touch "$HOME/.zshrc"
+fi
