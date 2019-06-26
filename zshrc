@@ -39,8 +39,12 @@ if [[ ! -z $COLORTERM ]] && [[ "$COLORTERM" == "truecolor" ]]; then
 fi
 
 #=====================================#
-# Add .bin if it exists               #
+# Add extras to path if existing      #
 #=====================================#
+
+if [[ -d $HOME/go/bin && ":$PATH:" != *:"$HOME/go/bin":* ]]; then
+    PATH=$HOME/go/bin:$PATH
+fi
 
 if [[ -d $HOME/.bin && ":$PATH:" != *:"$HOME/.bin":* ]]; then
     PATH=$HOME/.bin:$PATH
