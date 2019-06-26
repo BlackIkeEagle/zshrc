@@ -293,6 +293,12 @@ function userinfo {
     echo -ne $usrinfo
 }
 
+function extendedps {
+    if [[ -z ${TMUX} ]]; then
+        echo -ne "$(userinfo)─┤$(fldcol)${PSCOL}├$(scmbranch)"
+    fi
+}
+
 #=====================================#
 # Session colors tty/ssh/screen       #
 #=====================================#
@@ -315,5 +321,5 @@ fi
 #=====================================#
 
 setopt prompt_subst
-PROMPT='${PSCOL}┌─┤%(?,%F{green}%}%B●%b,%F{red}%}%B●%b)${PSCOL}├$(userinfo)─┤$(fldcol)${PSCOL}├$(scmbranch)─╼
+PROMPT='${PSCOL}┌─┤%(?,%F{green}%}%B●%b,%F{red}%}%B●%b)${PSCOL}├$(extendedps)─╼
 └╼ %{%F{reset}%}'
