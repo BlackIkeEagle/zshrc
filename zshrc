@@ -46,6 +46,9 @@ if [[ -d $HOME/go/bin && ":$PATH:" != *:"$HOME/go/bin":* ]]; then
     PATH=$HOME/go/bin:$PATH
 fi
 
+if [[ -d $HOME/.local/bin && ":$PATH:" != *:"$HOME/.local/bin":* ]]; then
+    PATH=$HOME/.loca/bin:$PATH
+fi
 if [[ -d $HOME/.bin && ":$PATH:" != *:"$HOME/.bin":* ]]; then
     PATH=$HOME/.bin:$PATH
 fi
