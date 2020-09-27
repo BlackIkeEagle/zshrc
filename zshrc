@@ -201,6 +201,9 @@ function scmbranch {
 
         if [[ $GITENABLED -eq 1 ]] && GITBRANCH=$(git rev-parse --abbrev-ref HEAD 2>&1); then
             GITDIRTY=''
+            if [[ "HEAD" == "$GITBRANCH" ]]; then
+                GITBRANCH=''
+            fi
             if [[ $SCMDIRTY -eq 1 ]]; then
                 # if has unstaged changes
                 git diff --no-ext-diff --quiet --exit-code || GITDIRTY=" *"
