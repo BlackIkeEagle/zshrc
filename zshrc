@@ -138,7 +138,7 @@ fi
 # defaults
 [[ -z $PSCOL ]] && PSCOL='%{%F{yellow}%}'
 [[ -z $USRCOL ]] && USRCOL='%{%F{yellow}%}'
-[[ -z $HSTCOL ]] && HSTCOL='%{%F{white}%}'
+[[ -z $HSTCOL ]] && HSTCOL='%{%F{grey}%}'
 # default flags
 [[ -z $SCMENABLED ]] && SCMENABLED=1
 [[ -z $SCMDIRTY ]] && SCMDIRTY=1
@@ -266,7 +266,7 @@ function fldcol {
         elif [[ $PWD =~ \/vimfiles ]]; then
             FLDCOL="%{%F{purple}%}%B%U${folder}%u%b"
         elif [[ $PWD =~ \/devel ]]; then
-            FLDCOL="%{%F{white}%}%B%U${folder}%u%b"
+            FLDCOL="%{%F{grey}%}%B%U${folder}%u%b"
         fi
     fi
 
