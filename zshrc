@@ -71,8 +71,8 @@ bindkey "^[[6~" history-search-forward
 #=====================================#
 
 export HISTFILE=~/.zsh_history
-export HISTSIZE=4096
-export SAVEHIST=8192
+export HISTSIZE=409600
+export SAVEHIST=819200
 # make sure we append history to the history file
 setopt appendhistory
 # share history among different running shells
