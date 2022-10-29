@@ -142,6 +142,23 @@ if [[ "$(id -u)" = "0" ]]; then
 fi
 
 #=====================================#
+# vcs configuration                   #
+#=====================================#
+
+if [[ 1 == $SCMENABLED ]]; then
+    autoload -Uz vcs_info
+    zstyle ':vcs_info:*' enable git hg svn
+    zstyle ':vcs_info:*' check-for-changes true
+    zstyle ':vcs_info:*' check-for-staged-changes true
+    zstyle ':vcs_info:*' stagedstr " +"
+    zstyle ':vcs_info:*' unstagedstr " *"
+    zstyle ':vcs_info:*' formats "${PSCOL}─(%{%F{yellow}%}%s${PSCOL})─(%{%F{cyan}%}%b%F{red}%}%u%F{green}%}%c${PSCOL})"
+    precmd() {
+        vcs_info
+    }
+fi
+
+#=====================================#
 # EDITOR is vim ofcourse              #
 #=====================================#
 
@@ -291,7 +308,11 @@ function userinfo {
 
 function extendedps {
     if [[ -z ${TMUX} ]]; then
-        echo -ne "$(userinfo)─┤$(fldcol)${PSCOL}├$(scmbranch)"
+        if [[ 1 == $SCMENABLED ]]; then
+            echo -ne "$(userinfo)─┤$(fldcol)${PSCOL}├${vcs_info_msg_0_}"
+        else
+            echo -ne "$(userinfo)─┤$(fldcol)${PSCOL}├"
+        fi
     fi
 }
 
