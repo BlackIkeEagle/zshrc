@@ -148,11 +148,15 @@ fi
 if [[ 1 == $SCMENABLED ]]; then
     autoload -Uz vcs_info
     zstyle ':vcs_info:*' enable git hg svn
-    zstyle ':vcs_info:*' check-for-changes true
-    zstyle ':vcs_info:*' check-for-staged-changes true
-    zstyle ':vcs_info:*' stagedstr " +"
-    zstyle ':vcs_info:*' unstagedstr " *"
-    zstyle ':vcs_info:*' formats "${PSCOL}─(%{%F{yellow}%}%s${PSCOL})─(%{%F{cyan}%}%b%F{red}%}%u%F{green}%}%c${PSCOL})"
+    if [[ 1 == $SCMDIRTY ]]; then
+        zstyle ':vcs_info:*' check-for-changes true
+        zstyle ':vcs_info:*' check-for-staged-changes true
+        zstyle ':vcs_info:*' stagedstr " +"
+        zstyle ':vcs_info:*' unstagedstr " *"
+        zstyle ':vcs_info:*' formats "${PSCOL}─(%{%F{yellow}%}%s${PSCOL})─(%{%F{cyan}%}%b%F{red}%}%u%F{green}%}%c${PSCOL})"
+    else
+        zstyle ':vcs_info:*' formats "${PSCOL}─(%{%F{yellow}%}%s${PSCOL})─(%{%F{cyan}%}%b${PSCOL})"
+    fi
     precmd() {
         vcs_info
     }
