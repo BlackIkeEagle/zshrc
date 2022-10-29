@@ -199,26 +199,15 @@ function fldcol {
         maxfolderlength=$(( maxfolderlength - 3))
         folder="...$(echo -n "$folder" | tail -c $maxfolderlength)"
     fi
-    if [[ "$(id -u)" != "0" ]]; then
-        if [[ $PWD =~ \/herecura ]]; then
-            FLDCOL="%{%F{yellow}%}%B%U${folder}%u%b"
-        elif [[ $PWD =~ \/scripts ]]; then
-            FLDCOL="%{%F{blue}%}%B%U${folder}%u%b"
-        elif [[ $PWD =~ \/vimfiles ]]; then
-            FLDCOL="%{%F{purple}%}%B%U${folder}%u%b"
-        elif [[ $PWD =~ \/devel ]]; then
-            FLDCOL="%{%F{grey}%}%B%U${folder}%u%b"
-        fi
-    fi
 
-    if [[ "${FLDCOL}" = "" ]]; then
-        if [[ $PWD =~ ^\/etc ]]; then
-            FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
-        elif [[ $PWD =~ ^\/var/log ]]; then
-            FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
-        else
-            FLDCOL="%{%F{cyan}%}%B${folder}%b"
-        fi
+    if [[ $PWD =~ ^\/etc ]]; then
+        FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
+    elif [[ $PWD =~ ^\/var/log ]]; then
+        FLDCOL="%{%F{red}%}%B%U${folder}%u%b"
+    elif [[ $PWD =~ \/devel ]] || [[ $PWD =~ \/code ]]; then
+        FLDCOL="%{%F{grey}%}%B%U${folder}%u%b"
+    else
+        FLDCOL="%{%F{cyan}%}%B${folder}%b"
     fi
     echo -ne ${FLDCOL}
 }
